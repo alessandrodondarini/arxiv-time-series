@@ -50,10 +50,10 @@ The results of the XGBoost model are shown in Figure 3, where we overlay the pre
 
 To assess the predictions quantitatively, we computed the **Mean Absolute Error (MAE)**. XGBoost achieved a MAE of **88.0 papers/day**, while ARIMA had a MAE of **126.8 papers/day**, corresponding to a **31% improvement**. This highlights XGBoost's superior ability to capture non-linear and non-stationary trends in daily publication counts.
 
----
+
 
 ## Conclusions
 
 This project shows that machine-learning methods such as XGBoost can outperform classical statistical models when dealing with noisy, highly non-stationary time-series data like daily arXiv publications. While ARIMA provides a strong baseline, XGBoost captures long-term trends and nonlinear patterns more effectively, leading to a substantial improvement in predictive accuracy. These results suggest that modern ML approaches offer a promising direction for forecasting scientific output and understanding the evolution of research fields over time.
 
----
+
