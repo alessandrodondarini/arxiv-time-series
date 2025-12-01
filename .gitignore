@@ -11,11 +11,7 @@ venv/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
 
-# Results / output
-results/
-*.csv
-*.h5
-*.pkl
+
 
 # OS files
 .DS_Store
