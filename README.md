@@ -16,12 +16,12 @@ As a time-series analysis problem, the target we aim to forecast is the **total 
 
 The situation is illustrated in the following plot, which shows the number of daily arXiv publications over time.
 
-![Daily Paper Evolution](results/arXiv_TimeSeries.png)
+![Daily Paper Evolution](results/arXiv_TimeSeries-checkpoint.png)
 *Figure 1: Time series of daily arXiv publications. The red line represents the rolling average computed using a 365-day window.*
 
 From Figure 1, it is clear that the number of daily publications has experienced substantial growth in recent years. To better understand this trend, it is particularly interesting to examine the daily publication patterns of the most popular categories.
 
-![Daily Paper Evolution per Category](results/arXiv_TimeSeries_cat.png)
+![Daily Paper Evolution per Category](results/arXiv_TimeSeries_cat-checkpoint.png)
 *Figure 2: Rolling average (365-day window) of the five most popular primary categories.  
 The blue line corresponds to Computer Science – Computer Vision (`cs.CV`), the orange line to Computer Science – Machine Learning (`cs.LG`), the green line to Computer Science – Computation and Language (`cs.CL`), the red line to Quantum Physics (`quant-ph`), and the purple line to High Energy Physics – Phenomenology (`hep-ph`). For a full description of arXiv categories, see https://arxiv.org/category_taxonomy.*
 
@@ -43,7 +43,7 @@ We have implemented two models to forecast daily arXiv publications:
 
 ## Results
 
-![XGBoost Predictions](../results/XGBoost_predictions.png)
+![XGBoost Predictions](../results/XGBoost_predictions-checkpoint.png)
 *Figure 3: Comparison of XGBoost predictions for daily arXiv publications with the actual test set data. The predictions are shown as an orange line, while the actual data are shown as a blue line.*
 
 The results of the XGBoost model are shown in Figure 3, where we overlay the predictions on the actual data for approximately one year. A visual inspection suggests that the model is able to capture the oscillatory behavior of the time series, although it struggles to reproduce most of the resonant peaks.
