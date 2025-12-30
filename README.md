@@ -37,7 +37,8 @@ We have implemented two models to forecast daily arXiv publications:
    This algorithm builds multiple decision trees sequentially to iteratively refine predictions by minimizing residual errors. Before implementing the algorithm, we performed feature engineering. In particular, we introduced *lagged features*, which link the current value to specific past values. Specifically, we created the `lag7` column for a 7-day lag (one week), as well as `lag30`, `lag60`, and `lag365` for one-month, two-month, and one-year lags. In addition, adding smoothed features can help the model detect long-term trends. To this end, we introduced rolling averages over 1 week, 3 months, and 6 months, which are stored in the `roll7`, `roll90`, and `roll180` columns.
 
 2. **Traditional Model: ARIMA**  
-   A very useful baseline that helped us quantify the gain of using machine learning models in time series analysis. In ARIMA models, the current value at time $t$ is modeled as a linear combination of $p$ lagged values (Autoregressive, AR) and $q$ lagged forecast errors (Moving Average, MA). Further transformations such as a Box-Cox transformation and differencing were implemented to make the time series as stationary as possible.
+  A useful baseline that allows a quantitative comparison between classical statistical approaches
+and machine learning models. In ARIMA models, the current value at time $t$ is modeled as a linear combination of $p$ lagged values (Autoregressive, AR) and $q$ lagged forecast errors (Moving Average, MA). Further transformations such as a Box-Cox transformation and differencing were implemented to make the time series as stationary as possible.
 
 
 
@@ -48,12 +49,14 @@ We have implemented two models to forecast daily arXiv publications:
 
 The results of the XGBoost model are shown in Figure 3, where we overlay the predictions on the actual data for approximately one year. A visual inspection suggests that the model is able to capture the oscillatory behavior of the time series, although it struggles to reproduce most of the resonant peaks.
 
-To assess the predictions quantitatively, we computed the **Mean Absolute Error (MAE)**. XGBoost achieved a MAE of **88.0 papers/day**, while ARIMA had a MAE of **126.8 papers/day**, corresponding to a **31% improvement**. This highlights XGBoost's superior ability to capture non-linear and non-stationary trends in daily publication counts.
+To assess the predictions quantitatively, we computed the **Mean Absolute Error (MAE)**. XGBoost achieved a MAE of **88.0 papers/day**, while ARIMA had a MAE of **126.8 papers/day**, corresponding to a **31% improvement**. This result highlights that XGBoost is better able to capture the noisy behavior of the data compared to the ARIMA baseline model, leading to an improvement of the forecasting metrics. 
 
 
 
-## Conclusions
+## Conclusions & Outlook
 
-This project shows that machine-learning methods such as XGBoost can outperform classical statistical models when dealing with noisy, highly non-stationary time-series data like daily arXiv publications. While ARIMA provides a strong baseline, XGBoost captures long-term trends and nonlinear patterns more effectively, leading to a substantial improvement in predictive accuracy. These results suggest that modern ML approaches offer a promising direction for forecasting scientific output and understanding the evolution of research fields over time.
+This project demonstrates how machine learning models such as XGBoost can be applied to forecasting problems involving noisy and non-stationary time-series data. In this specific dataset, XGBoost outperformed a classical ARIMA baseline, suggesting an improved ability to capture nonlinear patterns and long-term trends under the chosen evaluation setup.
+
+The analysis was conducted as an exploratory data science project, with an emphasis on data cleaning, feature engineering, and model comparison. Future work could include more systematic hyperparameter tuning and the adoption of more robust cross-validation strategies.
 
 
