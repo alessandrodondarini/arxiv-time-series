@@ -2,13 +2,17 @@
 
 arXiv is a free, open-access repository for scientific publications spanning fields such as Physics, Mathematics, Computer Science & AI, Statistics, and more. New papers are posted daily (excluding weekends), each identified by a unique ID and assigned subject-area labels (“categories”) that help readers navigate research by field.
 
-In this project, we analyze **1M+ papers published between 2007 and 2025**, using data from the [Kaggle arXiv Dataset](https://www.kaggle.com/datasets/jimmyyang0928/arxiv-dataset). Our goals are to monitor the number of daily publications, uncover long-term trends in scientific output, and identify the growth of specific research categories.
+In this project, we analyze **1M+ papers published between 2007 and 2025**, using data from the [arXiv Dataset](https://www.kaggle.com/datasets/jimmyyang0928/arxiv-dataset). Our goals are to monitor the number of daily publications, uncover long-term trends in scientific output, and identify the growth of specific research categories.
 
 Predicting the evolution of scientific productivity is valuable for both research planning and practical forecasting. Understanding which fields dominate over time can inform the **optimal allocation of funding**, reveal emerging areas of interest, and provide a clearer picture of **overall research dynamics**.
 
 From a technical standpoint, forecasting daily publication counts is a **challenging time-series problem**. This project compares the performance of a **classical statistical model (ARIMA)** and a **modern machine learning model (XGBoost)**, highlighting the strengths and limitations of each approach.
 
 
+## Tech Stack
+- **Python**: NumPy, Pandas, Matplotlib, Scikit-learn, XGBoost, SciPy, statsmodels  
+- **Jupyter Notebook**  
+- **Git/GitHub**  
 
 ## Project Overview
 
