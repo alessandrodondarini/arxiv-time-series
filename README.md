@@ -11,8 +11,7 @@ From a technical standpoint, forecasting daily publication counts is a **challen
 
 ## Tech Stack
 - **Python**: NumPy, Pandas, Matplotlib, Scikit-learn, XGBoost, SciPy, statsmodels  
-- **Jupyter Notebook**  
-- **Git/GitHub**  
+- **Jupyter Notebook**   
 
 ## Project Overview
 
