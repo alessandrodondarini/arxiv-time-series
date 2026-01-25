@@ -4,62 +4,77 @@ arXiv is a free, open-access repository for scientific publications spanning fie
 
 In this project, we analyze **1M+ papers published between 2007 and 2025**, using data from the [arXiv Dataset](https://www.kaggle.com/datasets/jimmyyang0928/arxiv-dataset). Our goals are to monitor the number of daily publications, uncover long-term trends in scientific output, and identify the growth of specific research categories.
 
-Predicting the evolution of scientific productivity is valuable for both research planning and practical forecasting. Understanding which fields dominate over time can inform the **optimal allocation of funding**, reveal emerging areas of interest, and provide a clearer picture of **overall research dynamics**.
+Forecasting the evolution of scientific productivity is valuable for both research planning and practical decision-making. Understanding which fields dominate over time can inform the **optimal allocation of funding**, reveal emerging areas of interest, and provide a clearer picture of **overall research dynamics**.
 
-From a technical standpoint, forecasting daily publication counts is a **challenging time-series problem**. This project compares the performance of a **classical statistical model (ARIMA)** and a **modern machine learning model (XGBoost)**, highlighting the strengths and limitations of each approach.
+From a technical standpoint, forecasting daily publication counts is a **challenging time-series problem**. This project explores the application of **feature-based machine learning (XGBoost)**, with a **classical ARIMA model included as a simple baseline** to contextualize the results.
 
+---
 
 ## Tech Stack
 - **Python**: NumPy, Pandas, Matplotlib, Scikit-learn, XGBoost, SciPy, statsmodels  
 - **Jupyter Notebook**   
 
+---
+
 ## Project Overview
 
-As a time-series analysis problem, the target we aim to forecast is the **total number of daily publications**. After data cleaning and feature extraction, we obtain a dataset that relates the **date** to the **number of publications on that day**. 
+The target for forecasting is the **total number of daily publications**. After data cleaning and feature extraction, we obtain a dataset linking the **date** to the **number of publications on that day**. 
 
-The situation is illustrated in the following plot, which shows the number of daily arXiv publications over time.
+The trend over time is illustrated in Figure 1.
 
-![Daily Paper Evolution](results/arXiv_TimeSeries.png)
-*Figure 1: Time series of daily arXiv publications. The red line represents the rolling average computed using a 365-day window.*
+![Daily Paper Evolution](results/arXiv_TimeSeries.png)  
+*Figure 1: Time series of daily arXiv publications. The red line represents the rolling average computed over 365 days.*
 
-From Figure 1, it is clear that the number of daily publications has experienced substantial growth in recent years. To better understand this trend, it is particularly interesting to examine the daily publication patterns of the most popular categories.
+Figure 1 shows a substantial growth in daily publications in recent years. To understand this better, we examine the publication patterns of the most popular categories.
 
-![Daily Paper Evolution per Category](results/arXiv_TimeSeries_cat.png)
-*Figure 2: Rolling average (365-day window) of the five most popular primary categories.  
-The blue line corresponds to Computer Science – Computer Vision (`cs.CV`), the orange line to Computer Science – Machine Learning (`cs.LG`), the green line to Computer Science – Computation and Language (`cs.CL`), the red line to Quantum Physics (`quant-ph`), and the purple line to High Energy Physics – Phenomenology (`hep-ph`). For a full description of arXiv categories, see https://arxiv.org/category_taxonomy.*
+![Daily Paper Evolution per Category](results/arXiv_TimeSeries_cat.png)  
+*Figure 2: Rolling average (365-day window) of the five most popular primary categories.*  
+*Blue: Computer Science – Computer Vision (`cs.CV`), Orange: Computer Science – Machine Learning (`cs.LG`), Green: Computer Science – Computation and Language (`cs.CL`), Red: Quantum Physics (`quant-ph`), Purple: High Energy Physics – Phenomenology (`hep-ph`).*  
 
-Figure 2 displays the rolling averages of the top five primary categories, showing that AI-related fields (`cs.CV`, `cs.LG`, `cs.CL`) have substantially overtaken the physics-related categories (`hep-ph`, `quant-ph`), which used to dominate the number of daily publications until around 2018.
+Figure 2 highlights that AI-related fields (`cs.CV`, `cs.LG`, `cs.CL`) have overtaken physics-related categories (`hep-ph`, `quant-ph`) in daily publication counts since ~2018.
 
-
+---
 
 ## Models Implemented
 
-We have implemented two models to forecast daily arXiv publications:
+Two models were implemented to forecast daily publications:
 
 1. **Machine Learning Model: XGBoost**  
-   This algorithm builds multiple decision trees sequentially to iteratively refine predictions by minimizing residual errors. Before implementing the algorithm, we performed feature engineering. In particular, we introduced *lagged features*, which link the current value to specific past values. Specifically, we created the `lag7` column for a 7-day lag (one week), as well as `lag30`, `lag60`, and `lag365` for one-month, two-month, and one-year lags. In addition, adding smoothed features can help the model detect long-term trends. To this end, we introduced rolling averages over 1 week, 3 months, and 6 months, which are stored in the `roll7`, `roll90`, and `roll180` columns.
+   - Builds multiple decision trees sequentially, refining predictions to minimize residual errors.  
+   - Feature engineering was applied:
+     - *Lagged features*: `lag7`, `lag30`, `lag60`, `lag365`  
+     - *Smoothed features*: rolling averages `roll7`, `roll90`, `roll180`  
+   - These features enable the model to capture both short-term fluctuations and longer-term trends.
 
 2. **Traditional Model: ARIMA**  
-  A useful baseline that allows a quantitative comparison between classical statistical approaches
-and machine learning models. In ARIMA models, the current value at time $t$ is modeled as a linear combination of $p$ lagged values (Autoregressive, AR) and $q$ lagged forecast errors (Moving Average, MA). Further transformations such as a Box-Cox transformation and differencing were implemented to make the time series as stationary as possible.
+   - Used as a **deliberately simple baseline**.  
+   - Models the current value as a linear combination of past observations (`p` lags) and past forecast errors (`q` lags).  
+   - Data were transformed (Box-Cox, differencing) to improve stationarity.  
+   - **Note:** Although the series exhibits seasonality, we did not implement SARIMA, since the goal was to provide a reference point for evaluating XGBoost.
 
-
+---
 
 ## Results
 
-![XGBoost Predictions](results/XGBoost_predictions.png)
-*Figure 3: Comparison of XGBoost predictions for daily arXiv publications with the actual test set data. The predictions are shown as an orange line, while the actual data are shown as a blue line.*
+![XGBoost Predictions](results/XGBoost_predictions.png)  
+*Figure 3: XGBoost predictions (orange) vs actual daily publications (blue) over approximately one year.*
 
-The results of the XGBoost model are shown in Figure 3, where we overlay the predictions on the actual data for approximately one year. A visual inspection suggests that the model is able to capture the oscillatory behavior of the time series, although it struggles to reproduce most of the resonant peaks.
+Predictions were evaluated using a **one-step-ahead validation setup**, meaning each prediction uses only historical **observed values** as input.  
 
-To assess the predictions quantitatively, we computed the **Mean Absolute Error (MAE)**. XGBoost achieved a MAE of **88.0 papers/day**, while ARIMA had a MAE of **126.8 papers/day**, corresponding to a **31% improvement**. This result highlights that XGBoost is better able to capture the noisy behavior of the data compared to the ARIMA baseline model, leading to an improvement of the forecasting metrics. 
+- **XGBoost MAE:** 88.0 papers/day  
+- **ARIMA baseline MAE:** 126.8 papers/day  
+- **Improvement:** 31%  
 
+These results demonstrate the impact of **feature engineering and nonlinear modeling** in capturing noisy patterns in the data.  
+**Caveat:** ARIMA was intentionally kept simple, and results reflect this specific evaluation setup.
 
+---
 
 ## Conclusions & Outlook
 
-This project demonstrates how machine learning models such as XGBoost can be applied to forecasting problems involving noisy and non-stationary time-series data. In this specific dataset, XGBoost outperformed a classical ARIMA baseline, suggesting an improved ability to capture nonlinear patterns and long-term trends under the chosen evaluation setup.
+This project illustrates how **feature-based machine learning models**, such as XGBoost, can be applied to noisy, non-stationary time series. In this dataset and evaluation setup, XGBoost outperformed a classical ARIMA baseline, highlighting the benefits of engineered lag and rolling features for short-term prediction.
 
-The analysis was conducted as an exploratory data science project, with an emphasis on data cleaning, feature engineering, and model comparison. Future work could include more systematic hyperparameter tuning and the adoption of more robust cross-validation strategies.
-
-
+**Limitations & next steps:**  
+- Results are valid for **one-step-ahead forecasting**; multi-step forecasting would require recursive or direct approaches.  
+- Incorporating seasonal models (e.g., SARIMA) or alternative ML approaches (e.g., LSTMs, Prophet) could further improve predictions.  
+- Hyperparameter tuning and more robust cross-validation strategies could enhance model reliability.
