@@ -1,4 +1,4 @@
-# Predicting Scientific Publication Trends on arXiv: XGBoost vs ARIMA
+# Analyzing and Forecasting Daily arXiv Publications Using Machine Learning
 
 arXiv is a free, open-access repository for scientific publications spanning fields such as Physics, Mathematics, Computer Science & AI, Statistics, and more. New papers are posted daily (excluding weekends), each identified by a unique ID and assigned subject-area labels (“categories”) that help readers navigate research by field.
 
