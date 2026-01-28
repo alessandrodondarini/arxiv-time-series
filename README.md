@@ -37,7 +37,7 @@ Figure 2 shows the most popular categories, highlighting that AI-related fields 
 
 ## Models Implemented
 
-### 1. XGBoost (Primary ML Model)
+### 1. XGBoost (ML Model)
 XGBoost is a gradient boosting method that models non-linear relationships and complex interactions in the data.  
 
 **Feature engineering applied:**
@@ -62,6 +62,9 @@ A naive seasonal forecast assumes the series repeats its pattern from the previo
 ---
 
 ## Model Evaluation
+
+![Test comparison](results/XGBoost_predictions.png)
+
 
 Predictions were evaluated by comparing the forecasted values to the actual observations.  
 
